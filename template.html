@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Brief - {{DATE}}</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="newspaper">
+        <!-- 报头 -->
+        <header class="masthead">
+            <div class="masthead-top">
+                <span class="edition">第 {{EDITION_NO}} 期</span>
+                <span class="date">{{DATE}}</span>
+                <span class="weather">{{WEATHER}}</span>
+            </div>
+            <h1 class="title">DAILY BRIEF</h1>
+            <p class="subtitle">全球政经科技日报 · Daily Intelligence Brief</p>
+        </header>
+
+        <!-- 头条摘要 -->
+        <section class="headlines">
+            <h2>📰 今日要闻 HEADLINES</h2>
+            <div class="headline-grid">
+                {{HEADLINES}}
+            </div>
+        </section>
+
+        <!-- 深度解读 -->
+        <section class="in-depth">
+            <h2>🔍 深度解读 IN-DEPTH</h2>
+            <article class="featured-story">
+                {{FEATURED}}
+            </article>
+        </section>
+
+        <!-- 英语角 -->
+        <section class="english-corner">
+            <h2>📖 英语角 ENGLISH CORNER</h2>
+            <div class="english-content">
+                {{ENGLISH}}
+            </div>
+        </section>
+
+        <!-- 数据速览 -->
+        <section class="data-brief">
+            <h2>📊 数据速览 DATA BRIEF</h2>
+            <div class="data-grid">
+                {{DATA}}
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>Daily Brief · 每日自动生成的全球情报简报</p>
+            <p>
+                <a href="archive/">📁 历史归档</a> · 
+                <a href="https://github.com/wangshuang12138-beep/daily-brief">🔗 GitHub</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
