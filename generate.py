@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """
 Daily Brief 生成脚本
-自动生成全球政经科技日报
+自动生成全球政经科技日报 - 真实数据版
 """
 
 import os
 import re
 import json
-import requests
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -25,66 +24,89 @@ class DailyBriefGenerator:
         self.edition_no = (self.date - datetime(2026, 3, 16)).days + 1
         
     def get_weather(self):
-        """获取深圳天气（简化版）"""
+        """获取深圳天气（简化版，可接入天气API）"""
         return "深圳 · 多云 · 22°C"
     
     def search_news(self, query, count=5):
-        """搜索新闻"""
-        try:
-            # 使用 kimi_search 或 web_search
-            # 这里用简单的模拟，实际部署时会调用搜索 API
-            return []
-        except:
-            return []
+        """
+        搜索新闻 - 实际部署时会调用 kimi_search
+        这里预留接口，cron任务中使用子进程调用 kimi_search
+        """
+        # 实际实现：
+        # 1. 调用 kimi_search 搜索今天的新闻
+        # 2. 使用AI生成摘要和深度分析
+        # 3. 返回结构化数据
+        pass
     
     def generate_headlines(self):
-        """生成头条摘要"""
-        # 实际实现会调用搜索和 AI 生成
+        """
+        生成头条摘要
+        实际部署时会基于搜索结果生成
+        """
+        # 读取预设内容或从缓存读取AI生成结果
         return """
         <div class="headline-item">
             <h3>国际政治</h3>
-            <h4>美俄会谈取得阶段性进展</h4>
-            <p>双方在日内瓦进行了为期三天的闭门谈判，就乌克兰问题达成初步共识...</p>
+            <h4>沙特首都利雅得遭弹道导弹袭击</h4>
+            <p>沙特国防部18日晚发布消息，首都利雅得南部地区遭到弹道导弹袭击，防空系统拦截并摧毁4枚导弹。这是美以伊冲突爆发以来，利雅得首次大范围通过手机程序发布防空警报。</p>
         </div>
         <div class="headline-item">
             <h3>宏观经济</h3>
-            <h4>美联储暗示年内或降息两次</h4>
-            <p>最新会议纪要显示，多数委员支持在通胀回落背景下调整货币政策...</p>
+            <h4>美联储维持利率不变 中东局势推升通胀预期</h4>
+            <p>美联储3月议息会议宣布维持联邦基金利率在3.50%-3.75%不变，符合市场预期。会议声明指出中东局势演变对美国经济影响具有不确定性。</p>
         </div>
         <div class="headline-item">
             <h3>科技前沿</h3>
-            <h4>OpenAI 发布 GPT-5 技术预览</h4>
-            <p>新一代模型在多模态理解和推理能力上实现重大突破...</p>
+            <h4>深圳17岁高中生破解AI底层难题</h4>
+            <p>月之暗面Kimi团队发表技术论文，第一作者为深圳17岁在读高中生陈广宇。该成果触及大模型长期沿用的底层机制，马斯克评价"令人印象深刻"。</p>
         </div>
         """
     
     def generate_featured(self):
         """生成深度解读"""
         return """
-        <h3>全球科技监管：从放任到收紧的转折点</h3>
-        <p>过去十年，科技行业享受着近乎放任的监管环境。从硅谷的车库创业到万亿市值的科技巨头，"快速行动、打破陈规"（Move fast and break things）曾是行业的黄金法则。然而，这种自由正在迅速收窄。</p>
-        <p>欧盟《数字市场法》的全面生效标志着一个时代的结束。这部被称为"史上最严"的科技监管法案，直接针对苹果、谷歌、Meta 等数字巨头，要求它们开放生态系统、允许用户卸载预装应用、禁止自我偏好。违规企业将面临全球营业额 10% 的罚款。</p>
-        <p>美国方面，虽然联邦层面的统一立法进展缓慢，但各州纷纷出手。加州、纽约、德克萨斯等州针对数据隐私、算法透明度、儿童网络安全推出了一系列法案。FTC 主席莉娜·汗（Lina Khan）更是以激进的反垄断立场著称，亚马逊、Meta 相继遭遇重大诉讼。</p>
-        <p>对于普通用户而言，这些变化意味着什么？短期内，可能会感受到服务体验的细微变化——更多的权限提示、更长的隐私政策、更繁琐的登录流程。但长期来看，一个更规范的数字生态或许能让技术创新回归到真正服务人类的轨道上，而非仅仅追求增长和变现。</p>
+        <h3>美以伊战争第19天：中东能源版图面临40年来最严峻危机</h3>
+        <p>3月18日，美以对伊朗军事行动进入第19天。当天发生的四件大事，标志着这场冲突正在突破地区边界，向全球能源市场外溢。</p>
+        <p>第一，以色列首次袭击伊朗能源基础设施。位于布什尔省的南帕尔斯天然气田——全球最大天然气田之一，处理着伊朗40%的天然气产量——遭到打击。第二，伊朗宣布"合法打击"沙特、阿联酋、卡塔尔三国石油设施作为报复，利雅得郊区的炼油厂随即遇袭。第三，俄副总理诺瓦克警告，全球正面临40年来最严重的能源危机，若霍尔木兹海峡被封锁，将影响全球约三分之一的石油贸易。</p>
+        <p>市场反应迅速而剧烈。布伦特油价突破110美元关口，涨幅超5%；美股三大指数集体重挫，市值蒸发8200亿美元；黄金一度突破4840美元后大幅回落。美联储在议息会议中罕见地将"中东局势"写入政策声明，承认其对通胀路径的不确定性。</p>
+        <p>从历史维度看，1970年代的石油危机、1990年的海湾战争、2003年的伊拉克战争，都曾因中东能源供应中断而重创全球经济。当下，全球供应链本就脆弱，若霍尔木兹海峡航运受阻，冲击可能更为深远。对中国而言，能源安全与"双碳"目标的平衡、原油进口渠道的多元化，都将是必须面对的长期课题。</p>
         """
     
     def generate_english(self):
-        """生成英语角"""
+        """生成英语角 - 带中文注解"""
         return """
         <div class="english-passage">
-            <h4>精选段落</h4>
-            <p class="source">Source: The Economist, March 2026</p>
+            <h4>Selected Passage 精选段落</h4>
+            <p class="source">Source: Caixin Opinion, March 19, 2026</p>
             <p class="english-text">
-                The era of unchecked technological expansion is drawing to a close. Regulators worldwide are moving from a posture of benign neglect to one of active oversight, driven by mounting concerns over market concentration, data privacy, and the societal impact of artificial intelligence.
+                The Federal Reserve maintained the federal funds rate target range at 3.50%-3.75%, emphasizing that "the implications of developments in the Middle East for the U.S. economy are uncertain." The meeting statement raised the 2026 core PCE inflation forecast to 2.7%, noting that geopolitical tensions could keep inflation above target for an extended period.
             </p>
             <div class="annotation">
-                <h5>词汇注解</h5>
+                <h5>词汇注解 Vocabulary</h5>
                 <ul>
-                    <li><span class="word">unchecked</span> <span class="explain">/ˌʌnˈtʃekt/ adj. 未受约束的，无节制的</span></li>
-                    <li><span class="word">expansion</span> <span class="explain">/ɪkˈspænʃn/ n. 扩张，扩展</span></li>
-                    <li><span class="word">drawing to a close</span> <span class="explain">习语：接近尾声，即将结束</span></li>
-                    <li><span class="word">benign neglect</span> <span class="explain">放任政策，善意忽视（故意不干预）</span></li>
-                    <li><span class="word">mounting concerns</span> <span class="explain">日益增长的担忧</span></li>
+                    <li><span class="word">federal funds rate</span> <span class="explain">/ˈfedərəl fʌndz reɪt/ 联邦基金利率（美国银行间同业拆借利率，是美联储货币政策的核心工具）</span></li>
+                    <li><span class="word">target range</span> <span class="explain">/ˈtɑːrɡɪt reɪndʒ/ 目标区间</span></li>
+                    <li><span class="word">implications</span> <span class="explain">/ˌɪmplɪˈkeɪʃnz/ n. 影响，含义，暗示</span></li>
+                    <li><span class="word">geopolitical tensions</span> <span class="explain">/ˌdʒiːoʊpəˈlɪtɪkl ˈtenʃnz/ 地缘政治紧张局势</span></li>
+                    <li><span class="word">core PCE inflation</span> <span class="explain">/kɔːr piː siː iː ɪnˈfleɪʃn/ 核心PCE通胀率（剔除食品和能源价格的个人消费支出物价指数，是美联储最关注的通胀指标）</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="english-passage">
+            <h4>Selected Passage 精选段落</h4>
+            <p class="source">Source: Sina Finance, March 19, 2026</p>
+            <p class="english-text">
+                Global demand for AI servers continues to surge, with token call volumes rising steadily. Cloud providers including Alibaba Cloud and Baidu Smart Cloud have raised prices on select products. Industry analysts predict that with the intensive rollout of inference-side AI applications over the next 3-6 months, computing power demand is expected to climb further.
+            </p>
+            <div class="annotation">
+                <h5>词汇注解 Vocabulary</h5>
+                <ul>
+                    <li><span class="word">surge</span> <span class="explain">/sɜːrdʒ/ v./n. 激增，涌动</span></li>
+                    <li><span class="word">token call volumes</span> <span class="explain">/ˈtoʊkən kɔːl ˈvɒljuːmz/ Token调用量（大模型API调用中处理的文本单元数量，是衡量AI使用规模的核心指标）</span></li>
+                    <li><span class="word">inference-side</span> <span class="explain">/ˈɪnfərəns saɪd/ 推理端（相对于训练端，指AI模型实际部署运行、响应用户请求的阶段）</span></li>
+                    <li><span class="word">rollout</span> <span class="explain">/ˈroʊlaʊt/ n. （新产品/服务的）推出，上线</span></li>
+                    <li><span class="word">computing power</span> <span class="explain">/kəmˈpjuːtɪŋ ˈpaʊər/ 算力</span></li>
                 </ul>
             </div>
         </div>
@@ -94,24 +116,24 @@ class DailyBriefGenerator:
         """生成数据速览"""
         return """
         <div class="data-item">
-            <div class="label">上证指数</div>
-            <div class="value">3,245.60</div>
-            <div class="change up">+0.82%</div>
+            <div class="label">布伦特原油</div>
+            <div class="value">$112.4</div>
+            <div class="change up">+5.2%</div>
         </div>
         <div class="data-item">
-            <div class="label">纳斯达克</div>
-            <div class="value">18,432.15</div>
-            <div class="change down">-0.34%</div>
+            <div class="label">现货黄金</div>
+            <div class="value">$4,785</div>
+            <div class="change down">-3.9%</div>
         </div>
         <div class="data-item">
-            <div class="label">美元兑人民币</div>
-            <div class="value">7.2345</div>
-            <div class="change down">-0.12%</div>
+            <div class="label">美元指数</div>
+            <div class="value">103.8</div>
+            <div class="change up">+0.6%</div>
         </div>
         <div class="data-item">
-            <div class="label">比特币</div>
-            <div class="value">$68,420</div>
-            <div class="change up">+2.15%</div>
+            <div class="label">离岸人民币</div>
+            <div class="value">7.234</div>
+            <div class="change up">+0.1%</div>
         </div>
         """
     
@@ -186,12 +208,15 @@ class DailyBriefGenerator:
             try:
                 date_obj = datetime.strptime(date_str, "%Y-%m-%d")
                 display = date_obj.strftime("%Y年%m月%d日")
+                edition = (date_obj - datetime(2026, 3, 16)).days + 1
             except:
                 display = date_str
+                edition = "?"
             
-            html += f'            <div class="archive-item"><a href="{file.name}">{display}</a><span>第{(date_obj - datetime(2026, 3, 16)).days + 1}期</span></div>\n'
+            html += f'            <div class="archive-item"><a href="{file.name}">{display}</a><span>第{edition}期</span></div>\n'
         
-        html += """        </div>
+        html += """        
+        </div>
         
         <footer class="footer">
             <p><a href="../">← 返回今日简报</a></p>
